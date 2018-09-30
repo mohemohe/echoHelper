@@ -11,9 +11,7 @@ type (
 		Path           string
 		ControllerFunc echo.HandlerFunc
 	}
-)
 
-type (
 	EchoHelper struct {
 		_echo *echo.Echo
 	}
