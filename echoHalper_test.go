@@ -2,6 +2,7 @@ package echoHelper
 
 import (
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"io/ioutil"
 	"net/http"
 	"testing"
@@ -10,7 +11,11 @@ import (
 var eh *EchoHelper
 
 func TestEchoHelper_New(t *testing.T) {
-	eh = New(echo.New())
+	eh = New(echo.New(), WithCustomMiddleware([]echo.MiddlewareFunc{
+		middleware.LoggerWithConfig(middleware.LoggerConfig{
+			Format: `${time_rfc3339_nano} ${method} ${uri} ${status} ${latency_human}` + "\n",
+		}),
+	}))
 	if eh == nil {
 		t.Error("echo helper instance is nil")
 	}

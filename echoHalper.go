@@ -15,16 +15,43 @@ type (
 	EchoHelper struct {
 		_echo *echo.Echo
 	}
+
+	echoHelperOptions struct {
+		middlewareFuncs []echo.MiddlewareFunc
+	}
+
+	echoHelperOption func(*echoHelperOptions)
 )
 
-func New(e *echo.Echo) (echoHelper *EchoHelper) {
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
+func New(e *echo.Echo, option ...echoHelperOption) (echoHelper *EchoHelper) {
+	opt := echoHelperOptions{}
+	for _, o := range option {
+		o(&opt)
+	}
+
+	if opt.middlewareFuncs == nil {
+		e.Use(middleware.Logger())
+		e.Use(middleware.Recover())
+	} else {
+		for _, o := range opt.middlewareFuncs {
+			e.Use(o)
+		}
+	}
 
 	echoHelper = &EchoHelper{
 		_echo: e,
 	}
 	return
+}
+
+func WithCustomMiddleware(middlewareFuncs []echo.MiddlewareFunc) echoHelperOption {
+	return func(opt *echoHelperOptions) {
+		opt.middlewareFuncs = middlewareFuncs
+	}
+}
+
+func (this *EchoHelper) Echo() *echo.Echo {
+	return this._echo
 }
 
 func (this *EchoHelper) Serve() {
