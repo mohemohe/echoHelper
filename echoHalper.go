@@ -10,6 +10,7 @@ type (
 		Method         string
 		Path           string
 		ControllerFunc echo.HandlerFunc
+		MiddleWareFuncs *[]echo.MiddlewareFunc
 	}
 
 	EchoHelper struct {
@@ -62,23 +63,59 @@ func (this *EchoHelper) RegisterRoutes(routes []Route) {
 	for _, route := range routes {
 		switch route.Method {
 		case echo.CONNECT:
-			this._echo.CONNECT(route.Path, route.ControllerFunc)
+			if route.MiddleWareFuncs != nil {
+				this._echo.CONNECT(route.Path, route.ControllerFunc, *route.MiddleWareFuncs...)
+			} else {
+				this._echo.CONNECT(route.Path, route.ControllerFunc)
+			}
 		case echo.DELETE:
-			this._echo.DELETE(route.Path, route.ControllerFunc)
+			if route.MiddleWareFuncs != nil {
+				this._echo.DELETE(route.Path, route.ControllerFunc, *route.MiddleWareFuncs...)
+			} else {
+				this._echo.DELETE(route.Path, route.ControllerFunc)
+			}
 		case echo.GET:
-			this._echo.GET(route.Path, route.ControllerFunc)
+			if route.MiddleWareFuncs != nil {
+				this._echo.GET(route.Path, route.ControllerFunc, *route.MiddleWareFuncs...)
+			} else {
+				this._echo.GET(route.Path, route.ControllerFunc)
+			}
 		case echo.HEAD:
-			this._echo.HEAD(route.Path, route.ControllerFunc)
+			if route.MiddleWareFuncs != nil {
+				this._echo.HEAD(route.Path, route.ControllerFunc, *route.MiddleWareFuncs...)
+			} else {
+				this._echo.HEAD(route.Path, route.ControllerFunc)
+			}
 		case echo.OPTIONS:
-			this._echo.OPTIONS(route.Path, route.ControllerFunc)
+			if route.MiddleWareFuncs != nil {
+				this._echo.OPTIONS(route.Path, route.ControllerFunc, *route.MiddleWareFuncs...)
+			} else {
+				this._echo.OPTIONS(route.Path, route.ControllerFunc)
+			}
 		case echo.PATCH:
-			this._echo.PATCH(route.Path, route.ControllerFunc)
+			if route.MiddleWareFuncs != nil {
+				this._echo.PATCH(route.Path, route.ControllerFunc, *route.MiddleWareFuncs...)
+			} else {
+				this._echo.PATCH(route.Path, route.ControllerFunc)
+			}
 		case echo.POST:
-			this._echo.POST(route.Path, route.ControllerFunc)
+			if route.MiddleWareFuncs != nil {
+				this._echo.POST(route.Path, route.ControllerFunc, *route.MiddleWareFuncs...)
+			} else {
+				this._echo.POST(route.Path, route.ControllerFunc)
+			}
 		case echo.PUT:
-			this._echo.PUT(route.Path, route.ControllerFunc)
+			if route.MiddleWareFuncs != nil {
+				this._echo.PUT(route.Path, route.ControllerFunc)
+			} else {
+				this._echo.PUT(route.Path, route.ControllerFunc)
+			}
 		case echo.TRACE:
-			this._echo.TRACE(route.Path, route.ControllerFunc)
+			if route.MiddleWareFuncs != nil {
+				this._echo.TRACE(route.Path, route.ControllerFunc)
+			} else {
+				this._echo.TRACE(route.Path, route.ControllerFunc)
+			}
 		default:
 			panic("unknown route definition")
 		}

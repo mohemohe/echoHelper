@@ -34,7 +34,7 @@ func TestEchoHelper_RegisterRoutes(t *testing.T) {
 	}
 
 	eh.RegisterRoutes([]Route{
-		{echo.GET, "/", dummyHandler1},
+		{echo.GET, "/", dummyHandler1, nil},
 	})
 
 	if eh._echo.Routes() == nil {
@@ -45,8 +45,8 @@ func TestEchoHelper_RegisterRoutes(t *testing.T) {
 	}
 
 	eh.RegisterRoutes([]Route{
-		{echo.GET, "/1", dummyHandler1},
-		{echo.GET, "/2", dummyHandler1},
+		{echo.GET, "/1", dummyHandler1, nil},
+		{echo.GET, "/2", dummyHandler1, nil},
 	})
 
 	if len(eh._echo.Routes()) != 3 {
@@ -54,8 +54,8 @@ func TestEchoHelper_RegisterRoutes(t *testing.T) {
 	}
 
 	eh.RegisterRoutes([]Route{
-		{echo.GET, "/1", dummyHandler2},
-		{echo.GET, "/2", dummyHandler2},
+		{echo.GET, "/1", dummyHandler2, nil},
+		{echo.GET, "/2", dummyHandler2, nil},
 	})
 
 	if len(eh._echo.Routes()) != 3 {
