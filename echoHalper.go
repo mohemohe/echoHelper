@@ -106,13 +106,13 @@ func (this *EchoHelper) RegisterRoutes(routes []Route) {
 			}
 		case echo.PUT:
 			if route.MiddleWareFuncs != nil {
-				this._echo.PUT(route.Path, route.ControllerFunc)
+				this._echo.PUT(route.Path, route.ControllerFunc, *route.MiddleWareFuncs...)
 			} else {
 				this._echo.PUT(route.Path, route.ControllerFunc)
 			}
 		case echo.TRACE:
 			if route.MiddleWareFuncs != nil {
-				this._echo.TRACE(route.Path, route.ControllerFunc)
+				this._echo.TRACE(route.Path, route.ControllerFunc, *route.MiddleWareFuncs...)
 			} else {
 				this._echo.TRACE(route.Path, route.ControllerFunc)
 			}
