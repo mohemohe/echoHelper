@@ -1,4 +1,4 @@
-module github.com/mohemohe/echoHelper
+module github.com/mohemohe/echoHelper/v4
 
 go 1.12
 
