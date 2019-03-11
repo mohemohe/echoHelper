@@ -7,7 +7,7 @@ routing helper for labstack/echo
 package main
 
 import (
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"github.com/mohemohe/echoHelper"
 	"controllers"
 )
@@ -15,12 +15,12 @@ import (
 func main() {
 	eh := echoHelper.New(echo.New())
 	eh.RegisterRoutes([]echoHelper.Route{
-		{echo.GET, "/api/v1/auth", auth.Get},
-		{echo.POST, "/api/v1/auth", auth.Post},
-		{echo.GET, "/api/v1/me", me.Get},
-		{echo.PUT, "/api/v1/me", me.Put},
-		{echo.GET, "/api/v1/users", users.Find},
-		{echo.GET, "/api/v1/users/:userId", users.Get},
+		{echo.GET, "/api/v1/auth", auth.Get, nil},
+		{echo.POST, "/api/v1/auth", auth.Post, nil},
+		{echo.GET, "/api/v1/me", me.Get, nil},
+		{echo.PUT, "/api/v1/me", me.Put, nil},
+		{echo.GET, "/api/v1/users", users.Find, nil},
+		{echo.GET, "/api/v1/users/:userId", users.Get, nil},
 	})
 	eh.Serve()
 }
