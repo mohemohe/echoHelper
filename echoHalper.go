@@ -1,6 +1,7 @@
 package echoHelper
 
 import (
+	"context"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -15,6 +16,7 @@ type (
 
 	EchoHelper struct {
 		_echo *echo.Echo
+		stopByUser     bool
 	}
 
 	echoHelperOptions struct {
@@ -55,8 +57,21 @@ func (this *EchoHelper) Echo() *echo.Echo {
 	return this._echo
 }
 
-func (this *EchoHelper) Serve() {
-	this._echo.Logger.Fatal(this._echo.Start(":1323"))
+func (this *EchoHelper) Serve(address ...string) {
+	a := ":1323"
+	if len(address) > 0 {
+		a = address[0]
+	}
+	this.stopByUser = false
+	err := this._echo.Start(a)
+	if this.stopByUser {
+		this._echo.Logger.Warn(err)
+	}
+}
+
+func (this *EchoHelper) Shutdown() error {
+	this.stopByUser = true
+	return this._echo.Shutdown(context.Background())
 }
 
 func (this *EchoHelper) RegisterRoutes(routes []Route) {
