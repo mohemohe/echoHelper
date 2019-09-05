@@ -8,7 +8,7 @@ package main
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/mohemohe/echoHelper"
+	"github.com/mohemohe/echoHelper/v4"
 	"controllers"
 )
 
